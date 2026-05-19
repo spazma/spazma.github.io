@@ -44,53 +44,79 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    // LOAD PROJECTS
-    function loadProjects() {
-        const terminalContent = document.querySelector('.terminal-content');
-        if (!terminalContent) return;
+	// LOAD PROJECTS
+	function loadProjects() {
+		const terminalContent = document.querySelector('.terminal-content');
+		if (!terminalContent) return;
 
-        terminalContent.innerHTML = "";
-        terminalContent.style.opacity = 0;
+		terminalContent.innerHTML = "";
+		terminalContent.style.opacity = 0;
 
-        const header = "> MY PROJECTS:\n\n";
-        let i = 0;
+		const header = "";
+		let i = 0;
 
-        function typeHeader() {
-            if (i < header.length) {
-                terminalContent.innerHTML = header.substring(0, i + 1).replace(/\n/g, "<br>");
-                i++;
-                setTimeout(typeHeader, 25);
-            } else {
-                fetch("https://api.github.com/users/spazma/repos", {
-                    headers: { "User-Agent": "spazma-terminal" }
-                })
-                .then(res => res.json())
-                .then(repos => {
-                    const pagesRepos = repos.filter(r =>
-                        r.has_pages && r.name !== "spazma.github.io"
-                    );
+		function typeHeader() {
+			if (i < header.length) {
+				terminalContent.innerHTML = header.substring(0, i + 1).replace(/\n/g, "<br>");
+				i++;
+				setTimeout(typeHeader, 25);
+			} else {
+				fetch("https://api.github.com/users/spazma/repos", {
+					headers: { "User-Agent": "spazma-terminal" }
+				})
+				.then(res => res.json())
+				.then(repos => {
 
-                    let html = "";
+					// --- AUTO: GitHub Pages ---
+					const pagesRepos = repos.filter(r =>
+						r.has_pages && r.name !== "spazma.github.io"
+					);
 
-                    pagesRepos.forEach(repo => {
-                        html += `
-                            <span class="green">• </span>
-                            <a href="https://spazma.github.io/${repo.name}/" target="_blank">
-                                ${repo.name}
-                            </a><br>
-                        `;
-                    });
+					let html = "";
 
-                    terminalContent.innerHTML += html;
+					html += `<span class="green">> PAGES:</span><br><br>`;
 
-                    terminalContent.style.transition = "opacity 0.8s";
-                    terminalContent.style.opacity = 1;
-                });
-            }
-        }
+					pagesRepos.forEach(repo => {
+						html += `
+							<span class="green">• </span>
+							<a href="https://spazma.github.io/${repo.name}/" target="_blank">
+								${repo.name}
+							</a><br>
+						`;
+					});
 
-        typeHeader();
-    }
+					// --- OTHER: ---
+					html += `<br><span class="green">> OTHER PROJECTS:</span><br><br>`;
+
+					const manualRepos = [
+						{ name: "video kompressor 10mb", url: "https://github.com/spazma/kompressor-10mb" },
+						{ name: "psp8 menager", url: "https://github.com/spazma/PSP8-menager" },
+						{ name: "foobar 2000 - history panel (SMP)", url: "https://github.com/spazma/foobar2000-history-panel" },
+						{ name: "foobar 2000 - main_player (SMP)", url: "https://github.com/spazma/foobar-SMP-main_player" },
+						{ name: "foobar 2000 - file info (SMP)", url: "https://github.com/spazma/foobar-SMP-file_info" },
+						{ name: "foobar 2000 - artwork panel (SMP)", url: "https://github.com/spazma/-foobar-SMP-artwork_panel" },
+						
+					];
+
+					manualRepos.forEach(repo => {
+						html += `
+							<span class="green">• </span>
+							<a href="${repo.url}" target="_blank">
+								${repo.name}
+							</a><br>
+						`;
+					});
+
+					terminalContent.innerHTML += html;
+
+					terminalContent.style.transition = "opacity 0.8s";
+					terminalContent.style.opacity = 1;
+				});
+			}
+		}
+
+		typeHeader();
+	}
 
 
     // BOOT → LOGO → FETCH → PROJECTS
