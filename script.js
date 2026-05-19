@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 					const manualRepos = [
 						{ name: "video kompressor 10mb", url: "https://github.com/spazma/kompressor-10mb", screenshot: "kompressor-10mb" },
-						{ name: "psp8 menager", url: "https://github.com/spazma/PSP8-menager", screenshot: "PSP8-menager" },
+						{ name: "paint shop pro 8 bckp-menager", url: "https://github.com/spazma/PSP8-menager", screenshot: "PSP8-menager" },
 						{ name: "sms-blaster", url: "https://github.com/spazma/sms-blaster", screenshot: "sms-blaster" },
 						{ name: "foobar 2000 - history panel (SMP)", url: "https://github.com/spazma/foobar2000-history-panel", screenshot: "foobar-history" },
 						{ name: "foobar 2000 - main_player (SMP)", url: "https://github.com/spazma/foobar-SMP-main_player", screenshot: "foobar-player" },
