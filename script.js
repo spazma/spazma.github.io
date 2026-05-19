@@ -43,6 +43,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }, delay);
     }
 
+    // SCREENSHOT PREVIEW
+    let hideScreenshotTimeout;
+    
+    function showScreenshot(imageName) {
+        clearTimeout(hideScreenshotTimeout);
+        const img = document.getElementById('screenshot-img');
+        img.src = `screens/${imageName}.png`;
+        img.onerror = () => {
+            // Jeśli screenshot nie istnieje, nie pokazujemy nic
+            const preview = document.querySelector('.screenshot-preview');
+            preview.classList.remove('show');
+        };
+        const preview = document.querySelector('.screenshot-preview');
+        preview.classList.add('show');
+    }
+
+    function hideScreenshot() {
+        hideScreenshotTimeout = setTimeout(() => {
+            const preview = document.querySelector('.screenshot-preview');
+            preview.classList.remove('show');
+        }, 800); // opóźnienie 0.8s po zjechaniu kursora
+    }
 
 	// LOAD PROJECTS
 	function loadProjects() {
@@ -79,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					pagesRepos.forEach(repo => {
 						html += `
 							<span class="green">• </span>
-							<a href="https://spazma.github.io/${repo.name}/" target="_blank">
+							<a href="https://spazma.github.io/${repo.name}/" target="_blank" class="project-link" data-screenshot="${repo.name}">
 								${repo.name}
 							</a><br>
 						`;
@@ -89,26 +111,34 @@ document.addEventListener("DOMContentLoaded", function() {
 					html += `<br><span class="green">> OTHER PROJECTS:</span><br><br>`;
 
 					const manualRepos = [
-						{ name: "video kompressor 10mb", url: "https://github.com/spazma/kompressor-10mb" },
-						{ name: "psp8 menager", url: "https://github.com/spazma/PSP8-menager" },
-						{ name: "sms-blaster", url: "https://github.com/spazma/sms-blaster" },
-						{ name: "foobar 2000 - history panel (SMP)", url: "https://github.com/spazma/foobar2000-history-panel" },
-						{ name: "foobar 2000 - main_player (SMP)", url: "https://github.com/spazma/foobar-SMP-main_player" },
-						{ name: "foobar 2000 - file info (SMP)", url: "https://github.com/spazma/foobar-SMP-file_info" },
-						{ name: "foobar 2000 - artwork panel (SMP)", url: "https://github.com/spazma/-foobar-SMP-artwork_panel" },
-						
+						{ name: "video kompressor 10mb", url: "https://github.com/spazma/kompressor-10mb", screenshot: "kompressor-10mb" },
+						{ name: "psp8 menager", url: "https://github.com/spazma/PSP8-menager", screenshot: "PSP8-menager" },
+						{ name: "sms-blaster", url: "https://github.com/spazma/sms-blaster", screenshot: "sms-blaster" },
+						{ name: "foobar 2000 - history panel (SMP)", url: "https://github.com/spazma/foobar2000-history-panel", screenshot: "foobar-history" },
+						{ name: "foobar 2000 - main_player (SMP)", url: "https://github.com/spazma/foobar-SMP-main_player", screenshot: "foobar-player" },
+						{ name: "foobar 2000 - file info (SMP)", url: "https://github.com/spazma/foobar-SMP-file_info", screenshot: "foobar-fileinfo" },
+						{ name: "foobar 2000 - artwork panel (SMP)", url: "https://github.com/spazma/-foobar-SMP-artwork_panel", screenshot: "foobar-artwork" },
 					];
 
 					manualRepos.forEach(repo => {
 						html += `
 							<span class="green">• </span>
-							<a href="${repo.url}" target="_blank">
+							<a href="${repo.url}" target="_blank" class="project-link" data-screenshot="${repo.screenshot}">
 								${repo.name}
 							</a><br>
 						`;
 					});
 
 					terminalContent.innerHTML += html;
+
+					// Dodaj event listenery do wszystkich linków projektów
+					document.querySelectorAll('.project-link').forEach(link => {
+						link.addEventListener('mouseenter', () => {
+							const screenshot = link.getAttribute('data-screenshot');
+							showScreenshot(screenshot);
+						});
+						link.addEventListener('mouseleave', hideScreenshot);
+					});
 
 					terminalContent.style.transition = "opacity 0.8s";
 					terminalContent.style.opacity = 1;
