@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Projekty Spazma</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; max-width: 700px; margin: auto; }
+        h1 { margin-bottom: 20px; }
+        ul { line-height: 1.8; padding-left: 20px; }
+        .loading { opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+<h1>Projekty Spazma</h1>
+<p class="loading" id="status">Ładowanie projektów…</p>
+<ul id="projects"></ul>
+
+<script>
+// Pobiera listę repo z GitHub API
+fetch("https://api.github.com/users/spazma/repos")
+    .then(res => res.json())
+    .then(repos => {
+        const list = document.getElementById("projects");
+        const status = document.getElementById("status");
+
+        // Filtrujemy tylko te repo, które mają GitHub Pages
+        const pagesRepos = repos.filter(r => r.has_pages);
+
+        if (pagesRepos.length === 0) {
+            status.textContent = "Brak projektów z GitHub Pages.";
+            return;
+        }
+
+        status.remove(); // usuwamy napis "ładowanie"
+
+        pagesRepos.forEach(repo => {
+            const li = document.createElement("li");
+            const link = document.createElement("a");
+
+            link.href = `https://spazma.github.io/${repo.name}/`;
+            link.textContent = repo.name;
+
+            li.appendChild(link);
+            list.appendChild(li);
+        });
+    })
+    .catch(err => {
+        document.getElementById("status").textContent = "Błąd ładowania.";
+        console.error(err);
+    });
+</script>
+
+</body>
+</html>
