@@ -22,6 +22,12 @@ body {
     color: var(--primary-green);
     overflow: hidden;
     height: 100vh;
+    width: 100vw;
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
 }
 
 /* MATRIX RAIN */
@@ -57,7 +63,7 @@ body {
 
 /* TERMINAL WINDOW */
 .cyber-terminal {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -100,6 +106,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-radius: 10px 10px 0 0;
+    flex-shrink: 0;
 }
 
 .terminal-controls {
@@ -132,6 +139,7 @@ body {
     font-weight: 700;
     color: var(--primary-cyan);
     text-shadow: 0 0 10px var(--glow-cyan);
+    font-size: 16px;
 }
 
 .signal-indicator {
@@ -200,6 +208,7 @@ body {
     margin: 5px 0;
     opacity: 0;
     animation: boot-fade-in 0.5s ease-out forwards;
+    font-size: 14px;
 }
 
 .boot-line:nth-child(1) { animation-delay: 1.5s; }
@@ -347,7 +356,7 @@ body {
     100% { transform: scale(1.08) translate(0,0); }
 }
 
-/* RESPONSIVE */
+/* TABLET */
 @media (max-width: 1200px) {
     .screenshot-preview {
         width: 320px;
@@ -355,8 +364,126 @@ body {
     }
 }
 
-@media (max-width: 900px) {
+/* MOBILE - FULL WIDTH TERMINAL */
+@media (max-width: 768px) {
+    html, body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+
+    .cyber-terminal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 95%;
+        max-width: none;
+        height: 90vh;
+        max-height: none;
+    }
+
+    .terminal-title {
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .terminal-body {
+        padding: 15px;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .boot-line {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    .terminal-content {
+        font-size: 16px;
+    }
+
     .screenshot-preview {
         display: none;
+    }
+
+    .terminal-logo {
+        width: 70px;
+        height: 70px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+    html, body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+
+    .cyber-terminal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 98%;
+        height: 95vh;
+        max-height: none;
+        max-width: none;
+    }
+
+    .terminal-header {
+        padding: 8px 10px;
+    }
+
+    .terminal-title {
+        font-size: 12px;
+        gap: 8px;
+    }
+
+    .terminal-controls {
+        gap: 6px;
+    }
+
+    .control {
+        width: 10px;
+        height: 10px;
+    }
+
+    .terminal-body {
+        padding: 12px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .boot-line {
+        font-size: 14px;
+        margin: 6px 0;
+    }
+
+    .terminal-content {
+        font-size: 14px;
+    }
+
+    .boot-sequence {
+        margin-bottom: 15px;
+    }
+
+    .terminal-logo {
+        width: 60px;
+        height: 60px;
+        bottom: 8px;
+        right: 8px;
+    }
+
+    .signal-dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .signal-indicator {
+        gap: 3px;
     }
 }
