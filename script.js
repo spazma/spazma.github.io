@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function showScreenshot(imageName) {
         clearTimeout(hideScreenshotTimeout);
         const img = document.getElementById('screenshot-img');
-        img.src = `screens/${imageName}.png`;
+        img.src = `screens/${imageName}.jpg`;
         img.onerror = () => {
             // Jeśli screenshot nie istnieje, nie pokazujemy nic
             const preview = document.querySelector('.screenshot-preview');
@@ -107,18 +107,18 @@ document.addEventListener("DOMContentLoaded", function() {
 						`;
 					});
 
-					// --- OTHER: ---
-					html += `<br><span class="green">> OTHER PROJECTS:</span><br><br>`;
+					// --- PROJECTS (github) ---
+					html += `<br><span class="green">> PROJECTS (github):</span><br><br>`;
 
 					const manualRepos = [
 						{ name: "video kompressor 10mb", url: "https://github.com/spazma/kompressor-10mb", screenshot: "kompressor-10mb" },
-						{ name: "paint shop pro 8 bckp-menager", url: "https://github.com/spazma/PSP8-menager", screenshot: "PSP8-menager" },
+						{ name: "paint shop pro 8 - bckp menager", url: "https://github.com/spazma/PSP8-menager", screenshot: "PSP8-menager" },
 						{ name: "sms-blaster", url: "https://github.com/spazma/sms-blaster", screenshot: "sms-blaster" },
-						{ name: "app_monitor", url: "https://github.com/spazma/app_monitor", screenshot: "app-mon" },
 						{ name: "foobar 2000 - history panel (SMP)", url: "https://github.com/spazma/foobar2000-history-panel", screenshot: "foobar-history" },
 						{ name: "foobar 2000 - main_player (SMP)", url: "https://github.com/spazma/foobar-SMP-main_player", screenshot: "foobar-player" },
 						{ name: "foobar 2000 - file info (SMP)", url: "https://github.com/spazma/foobar-SMP-file_info", screenshot: "foobar-fileinfo" },
 						{ name: "foobar 2000 - artwork panel (SMP)", url: "https://github.com/spazma/-foobar-SMP-artwork_panel", screenshot: "foobar-artwork" },
+
 					];
 
 					manualRepos.forEach(repo => {
@@ -126,6 +126,23 @@ document.addEventListener("DOMContentLoaded", function() {
 							<span class="green">• </span>
 							<a href="${repo.url}" target="_blank" class="project-link" data-screenshot="${repo.screenshot}">
 								${repo.name}
+							</a><br>
+						`;
+					});
+
+					// --- OTHER: (www) ---
+					html += `<br><span class="green">> OTHER (www):</span><br><br>`;
+
+					const manualWWW = [
+						{ name: "ASCII genZ (konwerter i generator ASCII / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
+						{ name: "WPISATOR", url: "https://spazma.net/wpisator", screenshot: "wpisator" },
+					];
+
+					manualWWW.forEach(site => {
+						html += `
+							<span class="green">• </span>
+							<a href="${site.url}" target="_blank" class="project-link" data-screenshot="${site.screenshot}">
+								${site.name}
 							</a><br>
 						`;
 					});
