@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", function() {
 					html += `<br><span class="green">> OTHER (www):</span><br><br>`;
 
 					const manualWWW = [
-						{ name: "ASCII genZ (konwerter i generator ASCII / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
 						{ name: "WPISATOR", url: "https://spazma.net/wpisator", screenshot: "wpisator" },
+						{ name: "ASCII genZ (konwerter i generator ASCII / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
 					];
 
 					manualWWW.forEach(site => {
