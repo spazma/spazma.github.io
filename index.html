@@ -65,7 +65,10 @@
 		</a>
 
     </div>
+	
 </div>
+
+<div id="visits-counter" class="visits-counter">visits: ...</div>
 
 <script src="script.js"></script>
 
@@ -102,6 +105,17 @@
         document.querySelectorAll(sel).forEach(function(el){ el.style.zIndex = 999999; });
       });
     }, 800);
+  });
+</script>
+
+<script>
+fetch("https://githubglowne.score-3e6.workers.dev")
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("visits-counter").innerText = "visits: " + data.count;
+  })
+  .catch(err => {
+    console.error("Counter error:", err);
   });
 </script>
 
