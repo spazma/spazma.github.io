@@ -68,5 +68,42 @@
 </div>
 
 <script src="script.js"></script>
+
+<!-- BUY ME A COFFEE WIDGET - wklej tutaj (przed zamknięciem body) -->
+<script data-name="BMC-Widget" data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="spazma"
+  data-description="Support me on Buy me a coffee!"
+  data-message="Hey there! If you enjoy what I do, feel free to fuel me with a coffee ☕🤟"
+  data-color="#FF813F"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18">
+</script>
+
+<!-- Fallback jeśli użytkownik ma wyłączony JS -->
+<noscript>
+  <div style="position:fixed;bottom:18px;right:18px;z-index:99999;">
+    <a href="https://www.buymeacoffee.com/spazma" target="_blank" rel="noopener">Support me on Buy Me a Coffee</a>
+  </div>
+</noscript>
+
+<!-- Krótki skrypt pomocniczy: upewnia się, że iframe/widget jest nad nakładkami -->
+<script>
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      // podnieś z-index dla iframeów BuyMeACoffee (jeśli istnieją)
+      document.querySelectorAll('iframe[src*="buymeacoffee"], iframe[src*="buymeacoffee"]').forEach(function(f){
+        f.style.zIndex = 999999;
+      });
+      // jeśli widget wstrzykuje elementy z klasami, spróbuj podnieść ich z-index
+      var possibleSelectors = ['.bmc-wbtn', '.bmc-button', '.bmc-floating'];
+      possibleSelectors.forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(el){ el.style.zIndex = 999999; });
+      });
+    }, 800);
+  });
+</script>
+
 </body>
 </html>
