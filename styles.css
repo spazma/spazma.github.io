@@ -131,6 +131,19 @@ html {
     filter: brightness(1.5);
 }
 
+.visits-counter {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    color: #0aff0a; /* cyber green */
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 9999;
+}
+
 .terminal-title {
     display: flex;
     align-items: center;
