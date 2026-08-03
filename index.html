@@ -121,15 +121,58 @@
   });
 </script>
 
+    <!-- ================= THE BEST COUNTER ON THE WORLD :) ================= -->
+
 <script>
-fetch("https://githubglowne.score-3e6.workers.dev")
-  .then(r => r.json())
-  .then(data => {
-    document.getElementById("visits-counter").innerText = "visits: " + data.count;
-  })
-  .catch(err => {
+(async function () {
+  const counterEl = document.getElementById("visits-counter");
+  const url = "https://githubglowne.score-3e6.workers.dev";
+
+  if (!counterEl) return;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Network response was not ok: " + res.status);
+
+    const raw = await res.text();
+
+    let data = null;
+    try {
+      data = JSON.parse(raw);
+    } catch (e) {
+      const trimmed = raw.trim();
+      if (/^-?\d+$/.test(trimmed)) {
+        data = { count: parseInt(trimmed, 10) };
+      } else {
+        console.warn("Unexpected counter response (non-JSON):", raw);
+        data = null;
+      }
+    }
+
+    let count = null;
+    if (data === null) {
+      count = "—";
+    } else if (typeof data === "number") {
+      count = data;
+    } else if (typeof data.count !== "undefined") {
+      count = data.count;
+    } else if (typeof data.lastCount !== "undefined") {
+      count = data.lastCount;
+    } else if (typeof data.visits !== "undefined") {
+      count = data.visits;
+    } else if (typeof data.value !== "undefined") {
+      count = data.value;
+    } else {
+      console.warn("Unexpected counter response shape:", data);
+      count = "—";
+    }
+
+    counterEl.innerText = "visits: " + count;
+  } catch (err) {
     console.error("Counter error:", err);
-  });
+    counterEl.innerText = "visits: —";
+  }
+})();
 </script>
 
 </body>
