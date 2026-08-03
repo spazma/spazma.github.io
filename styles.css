@@ -2,543 +2,379 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --primary-cyan: #00ffff;
-    --primary-green: #00ff00;
-    --terminal-amber: #ffb000;
-    --bg-dark: #0a0a0a;
-    --glow-cyan: rgba(0, 255, 255, 0.5);
+  --primary-cyan: #00ffff;
+  --primary-green: #00ff00;
+  --terminal-amber: #ffb000;
+  --bg-dark: #0a0a0a;
+  --glow-cyan: rgba(0, 255, 255, 0.5);
 }
 
 /* GLOBAL */
 body {
-    font-family: 'Share Tech Mono', monospace;
-    background: var(--bg-dark);
-    color: var(--primary-green);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
+  font-family: 'Share Tech Mono', monospace;
+  background: var(--bg-dark);
+  color: var(--primary-green);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
 }
 
 html {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 /* MATRIX RAIN */
 #matrix-rain {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.3;
 }
 
 /* GLITCH OVERLAY */
 .glitch-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 19;
-    pointer-events: none;
-    opacity: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 0, 255, 0.1) 50%, transparent 70%);
-    animation: glitch-flicker 0.15s infinite;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 19;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 0, 255, 0.1) 50%, transparent 70%);
+  animation: glitch-flicker 0.15s infinite;
 }
 
 @keyframes glitch-flicker {
-    0% { opacity: 0; }
-    50% { opacity: 0.1; }
-    100% { opacity: 0; }
+  0% { opacity: 0; }
+  50% { opacity: 0.1; }
+  100% { opacity: 0; }
 }
 
 /* TERMINAL WINDOW */
 .cyber-terminal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 900px;
-    height: 80vh;
-    max-height: 700px;
-    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(5, 5, 5, 0.98));
-    border: 2px solid var(--primary-cyan);
-    border-radius: 10px;
-    box-shadow: 
-        0 0 30px var(--glow-cyan),
-        inset 0 0 30px rgba(0, 255, 255, 0.1);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    animation: terminal-appear 1s ease-out;
-    overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 900px;
+  height: 80vh;
+  max-height: 700px;
+  background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(5,5,5,0.98));
+  border: 2px solid var(--primary-cyan);
+  border-radius: 10px;
+  box-shadow:
+    0 0 30px var(--glow-cyan),
+    inset 0 0 30px rgba(0,255,255,0.08);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  animation: terminal-appear 1s ease-out;
+  overflow: hidden;
 }
 
 @keyframes terminal-appear {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
-        filter: blur(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        filter: blur(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+  }
 }
 
-/* TERMINAL HEADER */
+/* HEADER */
 .terminal-header {
-    background: linear-gradient(90deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 0, 0.1));
-    border-bottom: 1px solid var(--primary-cyan);
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px 10px 0 0;
-    flex-shrink: 0;
+  background: linear-gradient(90deg, rgba(0,255,255,0.1), rgba(0,255,0,0.06));
+  border-bottom: 1px solid var(--primary-cyan);
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px 10px 0 0;
+  flex-shrink: 0;
 }
 
-.terminal-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.control {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.control.close { background: #ff5f56; }
-.control.minimize { background: #ffbd2e; }
-.control.maximize { background: #27c93f; }
-
-.control:hover {
-    transform: scale(1.2);
-    filter: brightness(1.5);
-}
+.terminal-controls { display:flex; gap:8px; }
+.control { width:12px; height:12px; border-radius:50%; cursor:pointer; transition:all .3s ease; }
+.control.close { background:#ff5f56; }
+.control.minimize { background:#ffbd2e; }
+.control.maximize { background:#27c93f; }
+.control:hover { transform: scale(1.2); filter: brightness(1.5); }
 
 .visits-counter {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    font-family: monospace;
-    font-size: 14px;
-    color: #0aff0a; /* cyber green */
-    background: rgba(0, 0, 0, 0.6);
-    padding: 4px 8px;
-    border-radius: 4px;
-    z-index: 9999;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #0aff0a;
+  background: rgba(0,0,0,0.6);
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 9999;
 }
 
 .terminal-title {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
-    color: var(--primary-cyan);
-    text-shadow: 0 0 10px var(--glow-cyan);
-    font-size: 16px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  font-family:'Orbitron', monospace;
+  font-weight:700;
+  color: var(--primary-cyan);
+  text-shadow: 0 0 8px var(--glow-cyan);
+  font-size: 16px;
 }
 
+/* SIGNAL INDICATOR (three blinking dots) */
 .signal-indicator {
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-    margin-left: 1px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  margin-left: 8px;
+  align-items: center;
 }
-
 .signal-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--primary-cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--glow-cyan);
-    animation: signal-blink 1.2s infinite ease-in-out;
-	
+  width: 6px;
+  height: 6px;
+  background: var(--primary-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0,255,255,0.6);
+  animation: signal-blink 1.2s infinite ease-in-out;
+  opacity: 0.3;
 }
-
 .signal-dot:nth-child(1) { animation-delay: 0s; }
-.signal-dot:nth-child(2) { animation-delay: 0.2s; }
-.signal-dot:nth-child(3) { animation-delay: 0.4s; }
+.signal-dot:nth-child(2) { animation-delay: 0.16s; }
+.signal-dot:nth-child(3) { animation-delay: 0.32s; }
 
 @keyframes signal-blink {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 1; }
+  0%,100% { opacity: 0.2; transform: scale(0.9); filter: brightness(0.7); }
+  50%     { opacity: 1; transform: scale(1.05); filter: brightness(1.3); }
 }
 
-/* GLITCH TEXT */
-.glitch-text {
-    position: relative;
-    animation: glitch-text 2s infinite;
-}
-
-@keyframes glitch-text {
-    0%, 100% {
-        text-shadow: 
-            0.05em 0 0 #ff0040,
-            -0.05em 0 0 var(--primary-cyan);
-    }
-    50% {
-        text-shadow: 
-            0.05em 0 0 #ff00ff,
-            -0.05em 0 0 #ffff00;
-    }
-}
-
-/* TERMINAL BODY */
+/* BODY */
 .terminal-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    font-size: 14px;
-    line-height: 1.6;
-    position: relative;
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 14px;
+  line-height: 1.6;
+  position: relative; /* preview is positioned absolute inside */
 }
 
-/* BOOT SEQUENCE */
-.boot-sequence {
-    margin-bottom: 20px;
+.terminal-body.preview-active .boot-sequence {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
 }
 
+/* BOOT LINES */
+.boot-sequence { margin-bottom: 20px; transition: opacity 180ms ease; }
 .boot-line {
-    color: var(--terminal-amber);
-    margin: 5px 0;
-    opacity: 0;
-    animation: boot-fade-in 0.5s ease-out forwards;
-    font-size: 14px;
+  color: var(--terminal-amber);
+  margin: 5px 0;
+  opacity: 0;
+  animation: boot-fade-in .5s ease-out forwards;
+  font-size: 14px;
 }
-
 .boot-line:nth-child(1) { animation-delay: 1.5s; }
 .boot-line:nth-child(2) { animation-delay: 2.5s; }
-.boot-line:nth-child(3) { animation-delay: 4.0s; }
-.boot-line:nth-child(4) { animation-delay: 5.0s; }
-.boot-line:nth-child(5) { animation-delay: 7.0s; }
+.boot-line:nth-child(3) { animation-delay: 4s; }
+.boot-line:nth-child(4) { animation-delay: 5s; }
+.boot-line:nth-child(5) { animation-delay: 7s; }
 .boot-line:nth-child(6) { animation-delay: 8.5s; }
+@keyframes boot-fade-in { 0% { opacity:0; transform: translateX(-20px);} 100% { opacity:1; transform:translateX(0);} }
 
-@keyframes boot-fade-in {
-    0% { opacity: 0; transform: translateX(-20px); }
-    100% { opacity: 1; transform: translateX(0); }
-}
+/* PROJECTS */
+.terminal-content { color: var(--primary-green); font-size:14px; line-height:1.6; white-space: normal; }
+.green { color: var(--primary-cyan); text-shadow:0 0 8px var(--glow-cyan); font-weight:bold; transition: all .2s ease; }
+.project-link { color: var(--primary-green); text-decoration:none; cursor:pointer; transition: all .2s ease; background: linear-gradient(90deg, var(--primary-cyan) 0%, transparent 0%); background-repeat:no-repeat; background-size:0% 2px; background-position:left bottom; }
+.project-link:hover { color: var(--primary-cyan); text-shadow:0 0 8px var(--glow-cyan); background-size:100% 2px; }
 
-/* PROJECTS OUTPUT */
-.terminal-content {
-    color: var(--primary-green);
-    font-size: 14px;
-    line-height: 1.6;
-    white-space: normal;
-}
-
-.green {
-    color: var(--primary-cyan);
-    text-shadow: 0 0 8px var(--glow-cyan);
-    font-weight: bold;
-    transition: all 0.2s ease;
-}
-
-.terminal-content:hover .green {
-    color: var(--primary-cyan);
-}
-
-.project-link {
-    color: var(--primary-green);
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: linear-gradient(90deg, var(--primary-cyan) 0%, var(--primary-cyan) 0%, transparent 0%);
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    background-position: left bottom;
-    transition: background-size 0.4s ease, color 0.2s ease;
-}
-
-.project-link:hover {
-    color: var(--primary-cyan);
-    text-shadow: 0 0 8px var(--glow-cyan);
-    background-size: 100% 2px;
-}
-
-/* SCREENSHOT PREVIEW */
+/* SCREENSHOT PREVIEW (desktop default) */
 .screenshot-preview {
-    position: absolute;
-    top: 30px;
-    right: 20px;
-    width: 400px;
-    height: 250px;
-    background: rgba(5, 5, 5, 0.9);
-    border: 1px solid rgba(0, 255, 255, 0.3);
-    border-radius: 5px;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 25;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.6s ease, transform 0.2s ease;
+  position: absolute;
+  top: 30px;
+  right: 32px;
+  width: 360px;
+  height: calc(360px * 9 / 16); /* keep 16:9 */
+  max-height: 65vh;
+  background: rgba(5,5,5,0.92);
+  border: 1px solid rgba(0,255,255,0.18);
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 25;
+  box-shadow: 0 8px 30px rgba(0,255,255,0.06);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: opacity 220ms ease, top 260ms ease, left 260ms ease, transform 260ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform, top, left, opacity;
+  aspect-ratio: 16 / 9;
+  max-width: 90%;
 }
 
-.screenshot-preview.show {
-    opacity: 1;
-    transform: translateX(0);
-    animation: screenshot-slide-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.screenshot-preview.show { opacity: 1; pointer-events: auto; }
+
+.screenshot-preview.mid-center {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }
 
-@keyframes screenshot-slide-in {
-    from {
-        transform: translateX(450px);
-    }
-    to {
-        transform: translateX(0);
-    }
+.screenshot-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display:block;
+  pointer-events: none;
 }
 
-#screenshot-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
+@media (max-width: 420px) {
+  .screenshot-preview {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%,-50%) !important;
+    width: min(340px, 92%);
+    height: 55vh;
+    max-height: 62vh;
+    border-radius: 10px;
+    z-index: 998;
+  }
+  .screenshot-preview.show { box-shadow: 0 18px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,255,255,0.08); }
+  .terminal-body.preview-active .boot-sequence { opacity:0; pointer-events:none; }
+  .terminal-body.preview-active .terminal-logo { opacity:0.6; }
 }
 
-.screenshot-img-empty {
-    display: none;
+@media (max-width: 800px) {
+  .screenshot-preview {
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    width: min(360px, 80%);
+    height: auto;
+    border-radius: 8px;
+    z-index: 26;
+  }
 }
 
-.screenshot-glitch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0;
-    animation: screenshot-glitch 0.15s infinite;
-}
-
-.screenshot-preview.show .screenshot-glitch {
-    opacity: 0.05;
-}
-
-@keyframes screenshot-glitch {
-    0% { transform: translateX(0); opacity: 0.05; }
-    25% { transform: translateX(-2px); opacity: 0.08; }
-    50% { transform: translateX(2px); opacity: 0.05; }
-    75% { transform: translateX(-1px); opacity: 0.08; }
-    100% { transform: translateX(0); opacity: 0.05; }
-}
-
-/* Logo appearance (default desktop) */
+/* LOGO - single consistent definition (hidden during boot; shown after boot via JS) */
 .terminal-logo {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    transition: opacity 1s ease, transform 0.3s ease;
-    cursor: pointer;
-    z-index: 20;
+  position: fixed;          /* fixed to viewport */
+  bottom: 15px;
+  right: 15px;
+  width: 100px;
+  height: 100px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 350ms ease, transform 220ms ease, left 220ms ease, top 220ms ease;
+  cursor: pointer;
+  z-index: 20;
+  pointer-events: none; /* JS switches to auto when showing */
 }
 
-.terminal-logo:hover {
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 12px var(--primary-cyan));
-    animation: logo-glitch 0.25s steps(2, end);
+/* stronger hover glitch + shake (overrides .js-positioned) */
+.terminal-logo:hover,
+.terminal-logo.js-positioned:hover {
+  /* don't set transform here with !important — animation will handle transforms */
+  filter: drop-shadow(0 0 18px rgba(0,255,255,0.28));
+  animation: logo-glitch 360ms steps(2,end) 1, logo-shake 360ms cubic-bezier(.25,.8,.25,1) 1;
+  will-change: transform, filter;
 }
 
+/* micro-variations while hover persists */
+@keyframes logo-shake {
+  0%   { transform: translate3d(0,0,0) scale(1.12); }
+  10%  { transform: translate3d(-3px,1px,0) scale(1.12); }
+  20%  { transform: translate3d(2px,-2px,0) scale(1.12); }
+  30%  { transform: translate3d(-2px,2px,0) scale(1.12); }
+  40%  { transform: translate3d(1px,-1px,0) scale(1.12); }
+  50%  { transform: translate3d(-1px,1px,0) scale(1.12); }
+  60%  { transform: translate3d(2px,0,0) scale(1.12); }
+  70%  { transform: translate3d(-2px,-1px,0) scale(1.12); }
+  80%  { transform: translate3d(1px,1px,0) scale(1.12); }
+  90%  { transform: translate3d(-1px,0,0) scale(1.12); }
+  100% { transform: translate3d(0,0,0) scale(1.12); }
+}
+
+/* glitch frames: quick translated/color shifts for digital feel */
 @keyframes logo-glitch {
-    0% { transform: scale(1.08) translate(0,0); }
-    25% { transform: scale(1.08) translate(-2px, 1px); }
-    50% { transform: scale(1.08) translate(2px, -1px); }
-    75% { transform: scale(1.08) translate(-1px, -2px); }
-    100% { transform: scale(1.08) translate(0,0); }
+  0% {
+    transform: translate3d(0,0,0) scale(1.12);
+    filter: drop-shadow(0 0 18px rgba(0,255,255,0.28));
+  }
+  20% {
+    transform: translate3d(-6px,0,0) scale(1.12) skewX(-2deg);
+    filter: drop-shadow(0 0 20px rgba(0,255,255,0.35)) hue-rotate(-8deg);
+  }
+  40% {
+    transform: translate3d(6px,-3px,0) scale(1.12) skewX(2deg);
+    filter: drop-shadow(0 0 16px rgba(0,255,255,0.25)) hue-rotate(6deg);
+  }
+  60% {
+    transform: translate3d(-4px,2px,0) scale(1.12) skewY(-1deg);
+  }
+  80% {
+    transform: translate3d(3px,-1px,0) scale(1.12) skewY(1deg);
+  }
+  100% {
+    transform: translate3d(0,0,0) scale(1.12);
+    filter: drop-shadow(0 0 18px rgba(0,255,255,0.28));
+  }
 }
 
-/* Remove frame/background when previewing for logo specifically */
-.screenshot-preview.logo-preview {
-    border: none;
-    background: transparent;
-    box-shadow: none;
+/* small screens: logo centered at bottom of viewport (like buymeacoffee) */
+@media (max-width: 485px) {
+  .terminal-logo {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12px;
+    right: auto;
+    width: 76px;
+    height: 76px;
+    z-index: 100000;
+    /* pointer-events left to JS control; keep as-is */
+  }
 }
 
-/* TABLET */
-@media (max-width: 1200px) {
-    .screenshot-preview {
-        width: 320px;
-        height: 200px;
-    }
+/* small-screen utility class (used by JS to enforce bottom-center) */
+.terminal-logo.small-screen {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 12px !important;
+  top: auto !important;
 }
 
-/* MOBILE - FULL WIDTH TERMINAL */
-@media (max-width: 768px) {
-    html, body {
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-    }
-
-    .cyber-terminal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 95%;
-        max-width: none;
-        height: 90vh;
-        max-height: none;
-    }
-
-    .terminal-title {
-        font-size: 14px;
-        gap: 10px;
-    }
-
-    .terminal-body {
-        padding: 15px;
-        font-size: 16px;
-        line-height: 1.8;
-    }
-
-    .boot-line {
-        font-size: 16px;
-        margin: 8px 0;
-    }
-
-    .terminal-content {
-        font-size: 16px;
-    }
-
-    /* MOVE PREVIEW TO TOP CENTER (over boot) ON MOBILE */
-    .screenshot-preview {
-        display: flex;
-        top: 18px;
-        right: auto;
-        bottom: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        width: min(320px, 90%);
-        height: 160px;
-        border-radius: 6px;
-        z-index: 26;
-    }
-
-    /* PLACE LOGO CENTERED AT BOTTOM on mobile (instead of middle) */
-    .terminal-logo {
-        position: absolute;
-        top: auto;
-        left: 50%;
-        right: auto;
-        bottom: 18px;               /* small gap from bottom */
-        transform: translateX(-50%);/* center horizontally */
-        width: 80px;
-        height: 80px;
-        z-index: 20;
-    }
+/* when JS sets .js-positioned remove CSS transforms */
+.terminal-logo.js-positioned {
+  transform: none;
 }
 
-/* SMALL MOBILE */
-@media (max-width: 480px) {
-    html, body {
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-    }
-
-    .cyber-terminal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 98%;
-        height: 95vh;
-        max-height: none;
-        max-width: none;
-    }
-
-    .terminal-header {
-        padding: 8px 10px;
-    }
-
-    .terminal-title {
-        font-size: 12px;
-        gap: 8px;
-    }
-
-    .terminal-controls {
-        gap: 6px;
-    }
-
-    .control {
-        width: 10px;
-        height: 10px;
-    }
-
-    .terminal-body {
-        padding: 12px;
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-    .boot-line {
-        font-size: 14px;
-        margin: 6px 0;
-    }
-
-    .terminal-content {
-        font-size: 14px;
-    }
-
-    .boot-sequence {
-        margin-bottom: 15px;
-    }
-
-    /* logo centered at bottom on small mobile as well */
-    .terminal-logo {
-        position: absolute;
-        top: auto;
-        left: 50%;
-        right: auto;
-        bottom: 14px;
-        transform: translateX(-50%);
-        width: 70px;
-        height: 70px;
-        z-index: 20;
-    }
-
-    .signal-dot {
-        width: 5px;
-        height: 5px;
-    }
-
-    .signal-indicator {
-        gap: 3px;
-    }
-
-    /* mobile smaller preview size and centered above boot */
-    .screenshot-preview {
-        bottom: auto;
-        top: 14px;
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        width: min(260px, 90%);
-        height: 140px;
-        z-index: 26;
-    }
+/* small mobile tweaks */
+@media (max-width: 485px) {
+  html, body { height:100vh; width:100vw; overflow:hidden; }
+  .cyber-terminal { width:95%; height:90vh; }
+  .terminal-body { padding:12px; font-size:14px; }
+  .screenshot-preview { top: 14px; left:50%; transform: translateX(-50%); width: min(280px, 90%); height: auto; }
 }
+
+/* keep other media queries or custom rules below if needed */
