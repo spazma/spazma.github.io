@@ -4,17 +4,40 @@ document.addEventListener("DOMContentLoaded", function() {
     const canvas = document.getElementById("matrix-rain");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // size & DPR support
+    function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(window.innerWidth * dpr);
+        canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = window.innerWidth + "px";
+        canvas.style.height = window.innerHeight + "px";
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+        ctx.scale(dpr, dpr);
+        // recalc columns/drops after resizing
+        columns = Math.floor(window.innerWidth / fontSize);
+        drops.length = 0;
+        for (let i = 0; i < columns; i++) drops[i] = Math.random() * 20 + 1;
+    }
 
     const letters = "01";
     const fontSize = 16;
-    const columns = canvas.width / fontSize;
+    let columns = Math.floor(window.innerWidth / fontSize);
     const drops = [];
 
-    for (let i = 0; i < columns; i++) drops[i] = 1;
+    for (let i = 0; i < columns; i++) drops[i] = Math.random() * 20 + 1;
+
+    // initial canvas setup
+    resizeCanvas();
+
+    // handle window resize
+    window.addEventListener('resize', function() {
+        // reset transform before re-scaling
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        resizeCanvas();
+    });
 
     function drawMatrix() {
+        // draw translucent background for trail effect
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -25,15 +48,15 @@ document.addEventListener("DOMContentLoaded", function() {
             const text = letters[Math.floor(Math.random() * letters.length)];
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            if (drops[i] * fontSize > window.innerHeight && Math.random() > 0.975) {
                 drops[i] = 0;
             }
             drops[i]++;
         }
     }
 
-    setInterval(drawMatrix, 33);
-
+    // use interval for consistent speed (keeps original behavior)
+    const matrixInterval = setInterval(drawMatrix, 33);
 
     // LOGO FADE-IN
     function showLogo(delay = 500) {
@@ -53,21 +76,31 @@ document.addEventListener("DOMContentLoaded", function() {
         img.onerror = () => {
             // Jeśli screenshot nie istnieje, nie pokazujemy nic
             const preview = document.querySelector('.screenshot-preview');
-            preview.classList.remove('show');
+            if (preview) preview.classList.remove('show');
         };
         const preview = document.querySelector('.screenshot-preview');
-        preview.classList.add('show');
+        if (preview) preview.classList.add('show');
     }
 
     function hideScreenshot() {
+        clearTimeout(hideScreenshotTimeout);
         hideScreenshotTimeout = setTimeout(() => {
             const preview = document.querySelector('.screenshot-preview');
-            preview.classList.remove('show');
+            if (preview) preview.classList.remove('show');
+            // usuń logo-preview klasę po ukryciu
+            setTimeout(() => {
+                const p = document.querySelector('.screenshot-preview');
+                if (p) p.classList.remove('logo-preview');
+            }, 300);
         }, 800); // opóźnienie 0.8s po zjechaniu kursora
     }
 
 	// LOAD PROJECTS
+	let projectsLoaded = false;
+
 	function loadProjects() {
+		if (projectsLoaded) return;
+		projectsLoaded = true; // guard to avoid multiple loads
 		const terminalContent = document.querySelector('.terminal-content');
 		if (!terminalContent) return;
 
@@ -90,9 +123,9 @@ document.addEventListener("DOMContentLoaded", function() {
 				.then(repos => {
 
 					// --- AUTO: GitHub Pages ---
-					const pagesRepos = repos.filter(r =>
+					const pagesRepos = Array.isArray(repos) ? repos.filter(r =>
 						r.has_pages && r.name !== "spazma.github.io"
-					);
+					) : [];
 
 					let html = "";
 
@@ -118,7 +151,6 @@ document.addEventListener("DOMContentLoaded", function() {
 						{ name: "foobar 2000 - main_player (SMP)", url: "https://github.com/spazma/foobar-SMP-main_player", screenshot: "foobar-player" },
 						{ name: "foobar 2000 - file info (SMP)", url: "https://github.com/spazma/foobar-SMP-file_info", screenshot: "foobar-fileinfo" },
 						{ name: "foobar 2000 - artwork panel (SMP)", url: "https://github.com/spazma/-foobar-SMP-artwork_panel", screenshot: "foobar-artwork" },
-
 					];
 
 					manualRepos.forEach(repo => {
@@ -136,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					const manualWWW = [
 						{ name: "SPAZMA.NET 🎸", url: "https://spazma.net", screenshot: "spazmanet" },
 						{ name: "WPISATOR", url: "https://spazma.net/wpisator", screenshot: "wpisator" },
-						{ name: "ASCII genZ (konwerter i generator ASCII / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
+						{ name: "ASCII-genZ (Braille & ASCII generator / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
 					];
 
 					manualWWW.forEach(site => {
@@ -157,10 +189,22 @@ document.addEventListener("DOMContentLoaded", function() {
 							showScreenshot(screenshot);
 						});
 						link.addEventListener('mouseleave', hideScreenshot);
+
+						// touch support for project links
+						link.addEventListener('touchstart', function(e) {
+							// prevent navigation on immediate tap
+							e.preventDefault();
+							showScreenshot(link.getAttribute('data-screenshot'));
+						}, { passive: false });
+						link.addEventListener('touchend', hideScreenshot);
 					});
 
 					terminalContent.style.transition = "opacity 0.8s";
 					terminalContent.style.opacity = 1;
+				})
+				.catch(err => {
+					// w razie błędu pokaż przynajmniej manualne listy
+					console.error("Error fetching repos:", err);
 				});
 			}
 		}
@@ -172,16 +216,71 @@ document.addEventListener("DOMContentLoaded", function() {
     // BOOT → LOGO → FETCH → PROJECTS
     const bootLines = document.querySelectorAll('.boot-line');
 
-    // 5th line = "[BOOT] System ready."
-    const systemReadyLine = bootLines[4];
-
-    systemReadyLine.addEventListener("animationend", () => {
-        showLogo(300); // logo pojawia się 0.3s po "System ready."
-    });
+    // safety: jeśli brak linii, po krótkim timeout pokaż logo i loadProjects
+    if (bootLines.length >= 5) {
+        const systemReadyLine = bootLines[4];
+        systemReadyLine.addEventListener("animationend", () => {
+            showLogo(300); // logo pojawia się 0.3s po "System ready."
+        });
+    } else {
+        // fallback
+        showLogo(300);
+    }
 
     const bootFetch = document.querySelector('.boot-fetch');
+    if (bootFetch) {
+        bootFetch.addEventListener("animationend", () => {
+            loadProjects();
+        });
+    } else {
+        // fallback: po 2.5s spróbuj załadować projekty
+        setTimeout(loadProjects, 2500);
+    }
 
-    bootFetch.addEventListener("animationend", () => {
+    // LOGO PREVIEW - hover + touch support
+    const logoEl = document.querySelector('.terminal-logo');
+    if (logoEl) {
+        logoEl.addEventListener('mouseenter', () => {
+            const screenshot = logoEl.getAttribute('data-screenshot') || 'github';
+            showScreenshot(screenshot);
+            const p = document.querySelector('.screenshot-preview');
+            if (p) p.classList.add('logo-preview');
+        });
+        logoEl.addEventListener('mouseleave', () => {
+            hideScreenshot();
+        });
+
+        // touch devices (iPhone, S20, etc.)
+        logoEl.addEventListener('touchstart', function touchStartHandler(e) {
+            // prefer show on touchstart; preventDefault to avoid immediate click navigation
+            e.preventDefault();
+            const screenshot = logoEl.getAttribute('data-screenshot') || 'github';
+            showScreenshot(screenshot);
+            const p = document.querySelector('.screenshot-preview');
+            if (p) p.classList.add('logo-preview');
+        }, { passive: false });
+
+        logoEl.addEventListener('touchend', function touchEndHandler() {
+            hideScreenshot();
+        });
+    }
+
+    // ACCELERATE BOOT ON CLICK
+    document.addEventListener('click', function onAnyClickDuringBoot(e) {
+        // jeśli projekty już załadowane, nic nie robimy
+        if (projectsLoaded) return;
+
+        // przyspieszamy: zatrzymujemy animacje boot i pokazujemy je jako widoczne
+        if (bootLines && bootLines.length) {
+            bootLines.forEach(bl => {
+                bl.style.animation = 'none';
+                bl.style.opacity = '1';
+                bl.style.transform = 'none';
+            });
+        }
+
+        // od razu pokaż logo i załaduj projekty
+        showLogo(0);
         loadProjects();
     });
 

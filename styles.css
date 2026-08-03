@@ -291,7 +291,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.6s ease, transform 0.2s ease;
 }
 
 .screenshot-preview.show {
@@ -343,6 +343,7 @@ html {
     100% { transform: translateX(0); opacity: 0.05; }
 }
 
+/* Logo appearance */
 .terminal-logo {
     position: absolute;
     bottom: 15px;
@@ -367,6 +368,13 @@ html {
     50% { transform: scale(1.08) translate(2px, -1px); }
     75% { transform: scale(1.08) translate(-1px, -2px); }
     100% { transform: scale(1.08) translate(0,0); }
+}
+
+/* Remove frame/background when previewing for logo specifically */
+.screenshot-preview.logo-preview {
+    border: none;
+    background: transparent;
+    box-shadow: none;
 }
 
 /* TABLET */
@@ -416,8 +424,15 @@ html {
         font-size: 16px;
     }
 
+    /* Show preview on mobile as well (positioned above logo, similar to PC feel) */
     .screenshot-preview {
-        display: none;
+        display: flex;
+        top: auto;
+        right: 15px;
+        bottom: 120px; /* sits above the logo */
+        width: 260px;
+        height: 160px;
+        border-radius: 6px;
     }
 
     .terminal-logo {
@@ -498,5 +513,13 @@ html {
 
     .signal-indicator {
         gap: 3px;
+    }
+
+    /* mobile smaller preview size and closer to logo */
+    .screenshot-preview {
+        bottom: 100px;
+        right: 12px;
+        width: 200px;
+        height: 120px;
     }
 }
