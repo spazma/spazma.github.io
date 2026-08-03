@@ -1,4 +1,3 @@
-/* CORE FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 
 * {
@@ -15,7 +14,6 @@
   --glow-cyan: rgba(0, 255, 255, 0.5);
 }
 
-/* GLOBAL */
 body {
   font-family: 'Share Tech Mono', monospace;
   background: var(--bg-dark);
@@ -30,7 +28,6 @@ html {
   width: 100vw;
 }
 
-/* MATRIX RAIN */
 #matrix-rain {
   position: fixed;
   top: 0;
@@ -41,7 +38,6 @@ html {
   opacity: 0.3;
 }
 
-/* GLITCH OVERLAY */
 .glitch-overlay {
   position: fixed;
   top: 0;
@@ -61,7 +57,6 @@ html {
   100% { opacity: 0; }
 }
 
-/* TERMINAL WINDOW */
 .cyber-terminal {
   position: fixed;
   top: 50%;
@@ -97,7 +92,6 @@ html {
   }
 }
 
-/* HEADER */
 .terminal-header {
   background: linear-gradient(90deg, rgba(0,255,255,0.1), rgba(0,255,0,0.06));
   border-bottom: 1px solid var(--primary-cyan);
@@ -140,7 +134,6 @@ html {
   font-size: 16px;
 }
 
-/* SIGNAL INDICATOR (three blinking dots) */
 .signal-indicator {
   display: flex;
   flex-direction: row;
@@ -166,7 +159,6 @@ html {
   50%     { opacity: 1; transform: scale(1.05); filter: brightness(1.3); }
 }
 
-/* BODY */
 .terminal-body {
   flex: 1;
   padding: 20px;
@@ -174,7 +166,7 @@ html {
   overflow-x: hidden;
   font-size: 14px;
   line-height: 1.6;
-  position: relative; /* preview is positioned absolute inside */
+  position: relative;
 }
 
 .terminal-body.preview-active .boot-sequence {
@@ -183,7 +175,6 @@ html {
   transition: opacity 180ms ease;
 }
 
-/* BOOT LINES */
 .boot-sequence { margin-bottom: 20px; transition: opacity 180ms ease; }
 .boot-line {
   color: var(--terminal-amber);
@@ -200,19 +191,17 @@ html {
 .boot-line:nth-child(6) { animation-delay: 8.5s; }
 @keyframes boot-fade-in { 0% { opacity:0; transform: translateX(-20px);} 100% { opacity:1; transform:translateX(0);} }
 
-/* PROJECTS */
 .terminal-content { color: var(--primary-green); font-size:14px; line-height:1.6; white-space: normal; }
 .green { color: var(--primary-cyan); text-shadow:0 0 8px var(--glow-cyan); font-weight:bold; transition: all .2s ease; }
 .project-link { color: var(--primary-green); text-decoration:none; cursor:pointer; transition: all .2s ease; background: linear-gradient(90deg, var(--primary-cyan) 0%, transparent 0%); background-repeat:no-repeat; background-size:0% 2px; background-position:left bottom; }
 .project-link:hover { color: var(--primary-cyan); text-shadow:0 0 8px var(--glow-cyan); background-size:100% 2px; }
 
-/* SCREENSHOT PREVIEW (desktop default) */
 .screenshot-preview {
   position: absolute;
   top: 30px;
   right: 32px;
   width: 360px;
-  height: calc(360px * 9 / 16); /* keep 16:9 */
+  height: calc(360px * 9 / 16);
   max-height: 65vh;
   background: rgba(5,5,5,0.92);
   border: 1px solid rgba(0,255,255,0.18);
@@ -277,9 +266,8 @@ html {
   }
 }
 
-/* LOGO - single consistent definition (hidden during boot; shown after boot via JS) */
 .terminal-logo {
-  position: fixed;          /* fixed to viewport */
+  position: fixed;
   bottom: 15px;
   right: 15px;
   width: 100px;
@@ -289,19 +277,16 @@ html {
   transition: opacity 350ms ease, transform 220ms ease, left 220ms ease, top 220ms ease;
   cursor: pointer;
   z-index: 20;
-  pointer-events: none; /* JS switches to auto when showing */
+  pointer-events: none;
 }
 
-/* stronger hover glitch + shake (overrides .js-positioned) */
 .terminal-logo:hover,
 .terminal-logo.js-positioned:hover {
-  /* don't set transform here with !important — animation will handle transforms */
   filter: drop-shadow(0 0 18px rgba(0,255,255,0.28));
   animation: logo-glitch 360ms steps(2,end) 1, logo-shake 360ms cubic-bezier(.25,.8,.25,1) 1;
   will-change: transform, filter;
 }
 
-/* micro-variations while hover persists */
 @keyframes logo-shake {
   0%   { transform: translate3d(0,0,0) scale(1.12); }
   10%  { transform: translate3d(-3px,1px,0) scale(1.12); }
@@ -316,7 +301,6 @@ html {
   100% { transform: translate3d(0,0,0) scale(1.12); }
 }
 
-/* glitch frames: quick translated/color shifts for digital feel */
 @keyframes logo-glitch {
   0% {
     transform: translate3d(0,0,0) scale(1.12);
@@ -342,7 +326,6 @@ html {
   }
 }
 
-/* small screens: logo centered at bottom of viewport (like buymeacoffee) */
 @media (max-width: 485px) {
   .terminal-logo {
     left: 50%;
@@ -352,11 +335,9 @@ html {
     width: 76px;
     height: 76px;
     z-index: 100000;
-    /* pointer-events left to JS control; keep as-is */
   }
 }
 
-/* small-screen utility class (used by JS to enforce bottom-center) */
 .terminal-logo.small-screen {
   left: 50% !important;
   transform: translateX(-50%) !important;
@@ -364,12 +345,10 @@ html {
   top: auto !important;
 }
 
-/* when JS sets .js-positioned remove CSS transforms */
 .terminal-logo.js-positioned {
   transform: none;
 }
 
-/* small mobile tweaks */
 @media (max-width: 485px) {
   html, body { height:100vh; width:100vw; overflow:hidden; }
   .cyber-terminal { width:95%; height:90vh; }
@@ -377,4 +356,3 @@ html {
   .screenshot-preview { top: 14px; left:50%; transform: translateX(-50%); width: min(280px, 90%); height: auto; }
 }
 
-/* keep other media queries or custom rules below if needed */
