@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					const manualWWW = [
 						{ name: "SPAZMA.NET 🎸", url: "https://spazma.net", screenshot: "spazmanet" },
 						{ name: "WPISATOR", url: "https://spazma.net/wpisator", screenshot: "wpisator" },
-						{ name: "ASCII-genZ (Braille & ASCII generator / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
+						{ name: "ASCII-genZ (Braille & ASCII gen. / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
 					];
 
 					manualWWW.forEach(site => {

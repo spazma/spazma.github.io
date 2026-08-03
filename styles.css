@@ -286,7 +286,7 @@ html {
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
-    z-index: 15;
+    z-index: 25;
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
     display: flex;
     align-items: center;
@@ -343,7 +343,7 @@ html {
     100% { transform: translateX(0); opacity: 0.05; }
 }
 
-/* Logo appearance */
+/* Logo appearance (default desktop) */
 .terminal-logo {
     position: absolute;
     bottom: 15px;
@@ -424,22 +424,31 @@ html {
         font-size: 16px;
     }
 
-    /* Show preview on mobile as well (positioned above logo, similar to PC feel) */
+    /* MOVE PREVIEW TO TOP CENTER (over boot) ON MOBILE */
     .screenshot-preview {
         display: flex;
-        top: auto;
-        right: 15px;
-        bottom: 120px; /* sits above the logo */
-        width: 260px;
+        top: 18px;
+        right: auto;
+        bottom: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(320px, 90%);
         height: 160px;
         border-radius: 6px;
+        z-index: 26;
     }
 
+    /* PLACE LOGO CENTERED AT BOTTOM on mobile (instead of middle) */
     .terminal-logo {
-        width: 70px;
-        height: 70px;
-        bottom: 10px;
-        right: 10px;
+        position: absolute;
+        top: auto;
+        left: 50%;
+        right: auto;
+        bottom: 18px;               /* small gap from bottom */
+        transform: translateX(-50%);/* center horizontally */
+        width: 80px;
+        height: 80px;
+        z-index: 20;
     }
 }
 
@@ -499,11 +508,17 @@ html {
         margin-bottom: 15px;
     }
 
+    /* logo centered at bottom on small mobile as well */
     .terminal-logo {
-        width: 60px;
-        height: 60px;
-        bottom: 8px;
-        right: 8px;
+        position: absolute;
+        top: auto;
+        left: 50%;
+        right: auto;
+        bottom: 14px;
+        transform: translateX(-50%);
+        width: 70px;
+        height: 70px;
+        z-index: 20;
     }
 
     .signal-dot {
@@ -515,11 +530,15 @@ html {
         gap: 3px;
     }
 
-    /* mobile smaller preview size and closer to logo */
+    /* mobile smaller preview size and centered above boot */
     .screenshot-preview {
-        bottom: 100px;
-        right: 12px;
-        width: 200px;
-        height: 120px;
+        bottom: auto;
+        top: 14px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(260px, 90%);
+        height: 140px;
+        z-index: 26;
     }
 }
