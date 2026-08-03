@@ -99,39 +99,31 @@ document.addEventListener("DOMContentLoaded", function() {
       preview.style.opacity = '1';
     }
 
-    img.onload = () => {
-      if (w <= 420) { finalizeShow(); return; }
+	img.onload = () => {
+	  const w = window.innerWidth;
 
-      if (w > 420 && w <= 800 && header && terminalBody) {
-        const headerRect = header.getBoundingClientRect();
-        const bodyRect = terminalBody.getBoundingClientRect();
-        const previewRect = preview.getBoundingClientRect();
+	  if (w <= 800 && header && terminalBody) {
+		const headerRect = header.getBoundingClientRect();
+		const bodyRect = terminalBody.getBoundingClientRect();
+		const previewRect = preview.getBoundingClientRect();
 
-        let topPx = headerRect.bottom - bodyRect.top + 8;
-        topPx = Math.max(8, Math.min(topPx, bodyRect.height - previewRect.height - 8));
+		let topPx = headerRect.bottom - bodyRect.top + 8;
+		topPx = Math.max(8, Math.min(topPx, bodyRect.height - previewRect.height - 8));
 
-        preview.style.left = '50%';
-        preview.style.top = topPx + 'px';
-        preview.style.transform = 'translateX(-50%)';
-        preview.classList.add('mid-center');
+		preview.style.left = '50%';
+		preview.style.top = topPx + 'px';
+		preview.style.transform = 'translateX(-50%)';
+		preview.classList.add('mid-center');
 
-        finalizeShow();
-        return;
-      }
+		void preview.offsetWidth;
+		preview.style.opacity = '1';
+		return;
+	  }
 
-      finalizeShow();
-    };
-
-    if (img.complete && img.naturalWidth !== 0) {
-      img.onload();
-    } else {
-      img.onerror = () => {
-        preview.classList.remove('show');
-        preview.style.pointerEvents = 'none';
-        preview.style.opacity = '';
-        if (terminalBody) terminalBody.classList.remove('preview-active');
-      };
-    }
+	  void preview.offsetWidth;
+	  preview.style.opacity = '1';
+	};
+    
   }
 
   function hideScreenshot() {
@@ -198,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const manualWWW = [
               { name: "SPAZMA.NET 🎸", url: "https://spazma.net", screenshot: "spazmanet" },
               { name: "WPISATOR", url: "https://spazma.net/wpisator", screenshot: "wpisator" },
-              { name: "ASCII-genZ (Braille & ASCII generator / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
+              { name: "ASCII-genZ (Braille & ASCII gen. / STEAM ED.)", url: "https://spazma.net/ascii-genz", screenshot: "ascii-genz" },
             ];
             manualWWW.forEach(site => {
               html += `<span class="green">• </span><a href="${site.url}" target="_blank" class="project-link" data-screenshot="${site.screenshot}">${site.name}</a><br>`;
