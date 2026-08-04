@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
     clearTimeout(hideScreenshotTimeout);
     const img = document.getElementById('screenshot-img');
     const preview = document.querySelector('.screenshot-preview');
-    const header = document.querySelector('.terminal-header');
     const terminalBody = document.querySelector('.terminal-body');
     if (!preview || !img) return;
 
@@ -94,38 +93,23 @@ document.addEventListener("DOMContentLoaded", function() {
       else terminalBody.classList.remove('preview-active');
     }
 
-    function finalizeShow() {
-      void preview.offsetWidth;
-      preview.style.opacity = '1';
-    }
-
 	img.onload = () => {
 	  const w = window.innerWidth;
 
-	  // Na mobilach (width <= 800px)
+	  // mobile
 	  if (w <= 800) {
-	    if (header && terminalBody) {
-	      const headerRect = header.getBoundingClientRect();
-	      const bodyRect = terminalBody.getBoundingClientRect();
-	      const previewRect = preview.getBoundingClientRect();
+	    preview.style.position = 'absolute';
+	    preview.style.top = '10px';
+	    preview.style.left = '50%';
+	    preview.style.transform = 'translateX(-50%)';
+	    preview.classList.add('mid-center');
 
-	      // Ustaw preview zaraz poniżej boot linii (od góry)
-	      let topPx = headerRect.bottom - bodyRect.top + 8;
-	      topPx = Math.max(8, Math.min(topPx, bodyRect.height - previewRect.height - 8));
-
-	      preview.style.position = 'absolute';
-	      preview.style.left = '50%';
-	      preview.style.top = topPx + 'px';
-	      preview.style.transform = 'translateX(-50%)';
-	      preview.classList.add('mid-center');
-
-	      void preview.offsetWidth;
-	      preview.style.opacity = '1';
-	      return;
-	    }
+	    void preview.offsetWidth;
+	    preview.style.opacity = '1';
+	    return;
 	  }
 
-	  // Na desktopie (width > 800px) - domyślna pozycja od góry po prawej
+	  // desktop
 	  preview.style.position = 'absolute';
 	  void preview.offsetWidth;
 	  preview.style.opacity = '1';
