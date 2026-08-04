@@ -236,34 +236,9 @@ html {
 }
 
 @media (max-width: 420px) {
-  .screenshot-preview {
-    top: 50% !important;
-    left: 50% !important;
-    right: auto;
-    bottom: auto;
-    transform: translate(-50%,-50%) !important;
-    width: min(340px, 92%);
-    height: 55vh;
-    max-height: 62vh;
-    border-radius: 10px;
-    z-index: 998;
-  }
   .screenshot-preview.show { box-shadow: 0 18px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,255,255,0.08); }
   .terminal-body.preview-active .boot-sequence { opacity:0; pointer-events:none; }
   .terminal-body.preview-active .terminal-logo { opacity:0.6; }
-}
-
-@media (max-width: 800px) {
-  .screenshot-preview {
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    right: auto;
-    width: min(360px, 80%);
-    height: auto;
-    border-radius: 8px;
-    z-index: 26;
-  }
 }
 
 .terminal-logo {
@@ -355,4 +330,3 @@ html {
   .terminal-body { padding:12px; font-size:14px; }
   .screenshot-preview { top: 14px; left:50%; transform: translateX(-50%); width: min(280px, 90%); height: auto; }
 }
-
