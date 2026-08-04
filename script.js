@@ -98,15 +98,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	  // mobile
 	  if (w <= 800) {
+	  if (w <= 800) {
 	    preview.style.position = 'fixed';
-	    preview.style.top = '10px';
-	    preview.style.left = '50%';
+	    preview.style.top = 'var(--mobile-preview-top)';
+	    preview.style.left = 'var(--mobile-preview-left)';
 	    preview.style.transform = 'translateX(-50%)';
 	    preview.classList.add('mid-center');
-
+	  
 	    void preview.offsetWidth;
 	    preview.style.opacity = '1';
 	    return;
+	}
 	  }
 
 	  // desktop
