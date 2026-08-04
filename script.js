@@ -102,24 +102,31 @@ document.addEventListener("DOMContentLoaded", function() {
 	img.onload = () => {
 	  const w = window.innerWidth;
 
-	  if (w <= 800 && header && terminalBody) {
-		const headerRect = header.getBoundingClientRect();
-		const bodyRect = terminalBody.getBoundingClientRect();
-		const previewRect = preview.getBoundingClientRect();
+	  // Na mobilach (width <= 800px)
+	  if (w <= 800) {
+	    if (header && terminalBody) {
+	      const headerRect = header.getBoundingClientRect();
+	      const bodyRect = terminalBody.getBoundingClientRect();
+	      const previewRect = preview.getBoundingClientRect();
 
-		let topPx = headerRect.bottom - bodyRect.top + 8;
-		topPx = Math.max(8, Math.min(topPx, bodyRect.height - previewRect.height - 8));
+	      // Ustaw preview zaraz poniżej boot linii (od góry)
+	      let topPx = headerRect.bottom - bodyRect.top + 8;
+	      topPx = Math.max(8, Math.min(topPx, bodyRect.height - previewRect.height - 8));
 
-		preview.style.left = '50%';
-		preview.style.top = topPx + 'px';
-		preview.style.transform = 'translateX(-50%)';
-		preview.classList.add('mid-center');
+	      preview.style.position = 'absolute';
+	      preview.style.left = '50%';
+	      preview.style.top = topPx + 'px';
+	      preview.style.transform = 'translateX(-50%)';
+	      preview.classList.add('mid-center');
 
-		void preview.offsetWidth;
-		preview.style.opacity = '1';
-		return;
+	      void preview.offsetWidth;
+	      preview.style.opacity = '1';
+	      return;
+	    }
 	  }
 
+	  // Na desktopie (width > 800px) - domyślna pozycja od góry po prawej
+	  preview.style.position = 'absolute';
 	  void preview.offsetWidth;
 	  preview.style.opacity = '1';
 	};
