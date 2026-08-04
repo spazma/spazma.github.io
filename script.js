@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	  // mobile
 	  if (w <= 800) {
-	    preview.style.position = 'absolute';
+	    preview.style.position = 'fixed';
 	    preview.style.top = '10px';
 	    preview.style.left = '50%';
 	    preview.style.transform = 'translateX(-50%)';
