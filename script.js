@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	  // mobile
 	  if (w <= 800) {
-	  if (w <= 800) {
 	    preview.style.position = 'fixed';
 	    preview.style.top = 'var(--mobile-preview-top)';
 	    preview.style.left = 'var(--mobile-preview-left)';
@@ -108,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	    void preview.offsetWidth;
 	    preview.style.opacity = '1';
 	    return;
-	}
 	  }
 
 	  // desktop
