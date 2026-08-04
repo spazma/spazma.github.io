@@ -229,8 +229,10 @@ document.addEventListener("DOMContentLoaded", function() {
   else setTimeout(loadProjects, 2500);
 
 
+// --- zastąp istniejący blok obsługujący .terminal-logo tym kodem ---
   const logoEl = document.querySelector('.terminal-logo');
   if (logoEl) {
+  // obsługa desktop hover / mouse
     logoEl.addEventListener('mouseenter', () => {
       const s = logoEl.getAttribute('data-screenshot') || 'github';
       showScreenshot(s);
@@ -238,14 +240,60 @@ document.addEventListener("DOMContentLoaded", function() {
       if (p) p.classList.add('logo-preview');
     });
     logoEl.addEventListener('mouseleave', hideScreenshot);
+
+  // dblclick na desktop -> otwórz GitHub
+    logoEl.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      const url = logoEl.closest('a')?.href || 'https://github.com/spazma';
+      window.open(url, '_blank', 'noopener');
+    });
+
+  // touch: show preview on touchstart (jak było)
     logoEl.addEventListener('touchstart', function(e){
+    // zapobiegamy domyślnemu gestowi (np. double-tap zoom)
       e.preventDefault();
       const s = logoEl.getAttribute('data-screenshot') || 'github';
       showScreenshot(s);
       const p = document.querySelector('.screenshot-preview');
       if (p) p.classList.add('logo-preview');
     }, { passive:false });
-    logoEl.addEventListener('touchend', hideScreenshot);
+
+  // touchend: wykrycie double-tap
+    (function() {
+      let lastTap = 0;
+      const DOUBLE_TAP_MAX_DELAY = 400; // ms, możesz zmienić jeśli chcesz dłuższy/krótszy próg
+
+      logoEl.addEventListener('touchend', function(e){
+        const now = Date.now();
+        const elapsed = now - lastTap;
+
+      // jeśli drugi tap w czasie krótszym niż threshold => double-tap
+        if (elapsed > 0 && elapsed <= DOUBLE_TAP_MAX_DELAY) {
+        // wykonaj nawigację do GitHub
+          e.preventDefault();
+          const url = logoEl.closest('a')?.href || 'https://github.com/spazma';
+        // otwieramy w nowej karcie
+          window.open(url, '_blank', 'noopener');
+        // ukrywamy preview (jakby użytkownik odszedł)
+          hideScreenshot();
+          lastTap = 0; // reset
+          return;
+        }
+
+      // nie-double-tap: ustaw ostatni tap i ustaw timeout resetujący go
+        lastTap = now;
+
+      // standardowe zachowanie: po touchend skrywamy preview (twoje wcześniejsze hide)
+      // ale z lekkim opóźnieniem, żeby double-tap miał szansę zadziałać
+        setTimeout(() => {
+        // jeśli nie nastąpił drugi tap w ciągu DOUBLE_TAP_MAX_DELAY, schowaj preview
+          if (Date.now() - lastTap >= DOUBLE_TAP_MAX_DELAY) {
+            hideScreenshot();
+            lastTap = 0;
+          }
+        }, DOUBLE_TAP_MAX_DELAY + 10);
+      }, { passive:false });
+    })();
   }
 
 
@@ -438,4 +486,74 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   } catch (e) { }
 
+})();
+
+(function setupDoubleTapLinks() {
+  const DOUBLE_TAP_MAX_DELAY = 400;
+  const lastTap = new WeakMap();
+
+  function openLink(a) {
+    try {
+      if (!a.href) return;
+      if (a.target && a.target.toLowerCase() === '_blank') {
+        window.open(a.href, '_blank', 'noopener');
+      } else {
+        window.location.href = a.href;
+      }
+    } catch (e) {
+      window.location.href = a.href;
+    }
+  }
+
+  document.addEventListener('dblclick', (ev) => {
+    const a = ev.target.closest && ev.target.closest('a');
+    if (!a) return;
+    ev.preventDefault();
+    openLink(a);
+  });
+
+  document.addEventListener('touchstart', function (ev) {
+    const a = ev.target.closest && ev.target.closest('a');
+    if (!a) return;
+
+    const wantsDoubleTap = a.hasAttribute('data-screenshot') || a.classList.contains('project-link');
+    if (!wantsDoubleTap) return;
+    ev.preventDefault();
+
+    const shot = a.getAttribute('data-screenshot');
+    if (shot) showScreenshot(shot);
+    else {
+      a.classList.add('tapped-focus');
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', function (ev) {
+    const a = ev.target.closest && ev.target.closest('a');
+    if (!a) return;
+
+    const wantsDoubleTap = a.hasAttribute('data-screenshot') || a.classList.contains('project-link');
+    if (!wantsDoubleTap) return;
+
+    const now = Date.now();
+    const last = lastTap.get(a) || 0;
+    const elapsed = now - last;
+
+    if (elapsed > 0 && elapsed <= DOUBLE_TAP_MAX_DELAY) {
+      ev.preventDefault();
+      lastTap.delete(a);
+      try { hideScreenshot(); } catch(e) {}
+      openLink(a);
+      return;
+    }
+
+    lastTap.set(a, now);
+
+    setTimeout(() => {
+      const stored = lastTap.get(a);
+      if (!stored || stored !== now) return;
+      lastTap.delete(a);
+      try { hideScreenshot(); } catch(e) {}
+      a.classList.remove('tapped-focus');
+    }, DOUBLE_TAP_MAX_DELAY + 20);
+  }, { passive: false });
 })();
