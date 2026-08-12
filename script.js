@@ -439,6 +439,19 @@
 
     startMatrix();
 
+
+    const logoEl = document.querySelector('.terminal-logo');
+    if (logoEl) {
+      const screenshotName = logoEl.getAttribute('data-screenshot') || 'github';
+      logoEl.addEventListener('mouseenter', () => showScreenshot(screenshotName));
+      logoEl.addEventListener('mouseleave', hideScreenshot);
+      logoEl.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        showScreenshot(screenshotName);
+      }, { passive: false });
+      logoEl.addEventListener('touchend', hideScreenshot);
+    }
+
     if (supportsVisualViewport()) {
       window.visualViewport.addEventListener('resize', () => {
         updateViewportVars();
