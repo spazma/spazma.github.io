@@ -1,4 +1,3 @@
-
 (function () {
   'use strict';
 
@@ -439,17 +438,39 @@
 
     startMatrix();
 
-
     const logoEl = document.querySelector('.terminal-logo');
     if (logoEl) {
       const screenshotName = logoEl.getAttribute('data-screenshot') || 'github';
+      let lastTapTime = 0;
+      let tapCount = 0;
+
       logoEl.addEventListener('mouseenter', () => showScreenshot(screenshotName));
       logoEl.addEventListener('mouseleave', hideScreenshot);
+      
       logoEl.addEventListener('touchstart', function (e) {
         e.preventDefault();
-        showScreenshot(screenshotName);
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTapTime;
+        
+        if (tapLength < DOUBLE_TAP_MAX_DELAY && tapLength > 0) {
+          // Double tap - navigate to GitHub
+          tapCount = 0;
+          window.open('https://github.com/spazma', '_blank', 'noopener,noreferrer');
+          hideScreenshot();
+        } else {
+          // Single tap - show screenshot
+          tapCount = 1;
+          showScreenshot(screenshotName);
+        }
+        lastTapTime = currentTime;
       }, { passive: false });
-      logoEl.addEventListener('touchend', hideScreenshot);
+      
+      logoEl.addEventListener('touchend', function (e) {
+        if (tapCount === 1) {
+          // Only hide on single tap touchend
+          setTimeout(hideScreenshot, 1500);
+        }
+      });
     }
 
     if (supportsVisualViewport()) {
