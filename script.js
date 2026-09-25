@@ -227,7 +227,7 @@
             const manualRepos = [
               { name: 'video kompressor 10mb', url: 'https://github.com/spazma/kompressor-10mb', screenshot: 'kompressor-10mb' },
               { name: 'paint shop pro 8 - bckp menager', url: 'https://github.com/spazma/PSP8-menager', screenshot: 'PSP8-menager' },
-              { name: 'sms-blaster', url: 'https://github.com/spazma/sms-blaster', screenshot: 'sms-blaster' },
+              { name: 'sms-blaster (for android)', url: 'https://github.com/spazma/sms-blaster', screenshot: 'sms-blaster' },
 			  { name: 'YT shadowban checker + comment marking ', url: 'https://github.com/spazma/YouTube-Shadow-Comment', screenshot: 'yt-shadowban' },
               { name: 'foobar 2000 - history panel (SMP)', url: 'https://github.com/spazma/foobar2000-history-panel', screenshot: 'foobar-history' },
               { name: 'foobar 2000 - main_player (SMP)', url: 'https://github.com/spazma/foobar-SMP-main_player', screenshot: 'foobar-player' },
