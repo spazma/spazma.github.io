@@ -225,7 +225,8 @@
             });
             html += `<br><span class="green">> PROJECTS (github):</span><br><br>`;
             const manualRepos = [
-              { name: 'video kompressor 10mb', url: 'https://github.com/spazma/kompressor-10mb', screenshot: 'kompressor-10mb' },
+              { name: 'video kompressor 10mb (batch)', url: 'https://github.com/spazma/kompressor-10mb', screenshot: 'kompressor-10mb' },
+			  { name: 'video kompresor PRO (GUI)', url: 'https://github.com/spazma/kompresor-PRO', screenshot: 'kompressor-GUI' },
               { name: 'paint shop pro 8 - bckp menager', url: 'https://github.com/spazma/PSP8-menager', screenshot: 'PSP8-menager' },
               { name: 'sms-blaster (for android)', url: 'https://github.com/spazma/sms-blaster', screenshot: 'sms-blaster' },
 			  { name: 'YT shadowban checker + comment marking', url: 'https://github.com/spazma/YouTube-Shadow-Comment', screenshot: 'yt-shadowban' },
