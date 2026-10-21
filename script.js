@@ -225,6 +225,7 @@
             });
             html += `<br><span class="green">> PROJECTS (github):</span><br><br>`;
             const manualRepos = [
+			  { name: 'Secure File Eraser (sdelete-eraser)', url: 'https://github.com/spazma/sdelete-eraser', screenshot: 'sdelete-eraser' },
               { name: 'video kompressor 10mb (batch)', url: 'https://github.com/spazma/kompressor-10mb', screenshot: 'kompressor-10mb' },
 			  { name: 'kompresor PRO (GUI)', url: 'https://github.com/spazma/kompresor-PRO', screenshot: 'kompresor-GUI' },
               { name: 'paint shop pro 8 - bckp menager', url: 'https://github.com/spazma/PSP8-menager', screenshot: 'PSP8-menager' },
